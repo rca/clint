@@ -42,5 +42,17 @@ class ColoredStringTestCase(unittest.TestCase):
         output = new_str.replace("world", "universe")
         assert output.s == "hello universe"
 
+class CommandTestCase(unittest.TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_command(self):
+        from clint.command import Command
+
+        command = Command()
+
 if __name__ == '__main__':
     unittest.main()

@@ -38,6 +38,7 @@ setup(
     ],
     packages= [
         'clint',
+        'clint.logging',
         'clint.textui',
         'clint.packages', 'clint.packages.colorama'
     ],
