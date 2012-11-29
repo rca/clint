@@ -19,8 +19,8 @@ USAGE_REGEX = r'^\n*([\w\W\s\n]+?)\n+$'
 
 
 class Command(object):
-    def __init__(self):
-        self.parser = OptionParser(usage=re.sub(USAGE_REGEX, r'\1', __doc__))
+    def __init__(self, doc=None):
+        self.parser = OptionParser(usage=re.sub(USAGE_REGEX, r'\1', doc or __doc__))
         self._fill_parser()
 
         self.options, self.args = self.parser.parse_args()
