@@ -11,7 +11,7 @@ from __future__ import absolute_import
 import logging
 import re
 
-from optparse import OptionParser
+from argparse import ArgumentParser
 
 from clint.logging.handlers import ConsoleHandler
 
@@ -20,10 +20,10 @@ USAGE_REGEX = r'^\n*([\w\W\s\n]+?)\n+$'
 
 class Command(object):
     def __init__(self, doc=None):
-        self.parser = OptionParser(usage=re.sub(USAGE_REGEX, r'\1', doc or __doc__))
+        self.parser = ArgumentParser(usage=re.sub(USAGE_REGEX, r'\1', doc or __doc__))
         self._fill_parser()
 
-        self.options, self.args = self.parser.parse_args()
+        self.args = self.parser.parse_args()
 
         self.logger = None
 
@@ -32,8 +32,8 @@ class Command(object):
     def _fill_parser(self):
         p = self.parser
 
-        p.add_option('-l', '--loglevel', default='info',
-                     help='Set log level, default info')
+        p.add_argument('-l', '--loglevel', default='info',
+                       help='Set log level, default info')
 
     def _setup_logger(self):
         # setup the root logger
@@ -42,7 +42,7 @@ class Command(object):
         
         # create console handler and set level to debug
         ch = ConsoleHandler()
-        ch.setLevel(getattr(logging, self.options.loglevel.upper()))
+        ch.setLevel(getattr(logging, self.args.loglevel.upper()))
         
         # create formatter
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
