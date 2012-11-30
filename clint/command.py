@@ -20,7 +20,7 @@ USAGE_REGEX = r'^\n*([\w\W\s\n]+?)\n+$'
 
 class Command(object):
     def __init__(self, doc=None):
-        self.parser = ArgumentParser(usage=re.sub(USAGE_REGEX, r'\1', doc or __doc__))
+        self.parser = ArgumentParser(description=re.sub(USAGE_REGEX, r'\1', doc or __doc__))
         self._fill_parser()
 
         self.args = self.parser.parse_args()
