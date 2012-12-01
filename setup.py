@@ -21,7 +21,7 @@ if sys.argv[-1] == "publish":
     publish()
     sys.exit()
 
-required = ['argparse', 'args']
+required = ['argparse', 'args', 'mock']
 
 setup(
     name='clint',
