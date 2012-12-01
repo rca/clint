@@ -53,5 +53,8 @@ class Command(object):
         # add ch to logger
         self.logger.addHandler(ch)
 
+    def quit(self):
+        pass
+
     def run(self):
         print 'define the run method in your subclass'
