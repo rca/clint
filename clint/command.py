@@ -10,6 +10,7 @@ from __future__ import absolute_import
 
 import logging
 import re
+import sys
 
 from argparse import ArgumentParser
 
@@ -18,7 +19,39 @@ from clint.logging.handlers import ConsoleHandler
 USAGE_REGEX = r'^\n*([\w\W\s\n]+?)\n+$'
 
 
+class CommandError(Exception):
+    def __init__(self, message=None, status=1):
+        super(CommandError, self).__init__(message, status)
+
+
+def run_command(name, command_cls, *args, **kwargs):
+    if name == '__main__':
+        command = None
+        message = None
+        status = 0
+
+        try:
+            command = command_cls(*args, **kwargs)
+
+            sys.exit(command.run() or 0)
+        except CommandError, exc:
+            message = exc[0]
+            status = exc[1]
+
+            if message:
+                sys.stderr.write('{0}\n'.format(message))
+        except KeyboardInterrupt:
+            pass
+        finally:
+            if command:
+                command.quit()
+
+        sys.exit(status)
+
+
 class Command(object):
+    CommandError = CommandError
+
     def __init__(self, doc=None):
         self.parser = ArgumentParser(description=re.sub(USAGE_REGEX, r'\1', doc or self.__class__.__doc__))
         self._fill_parser()
