@@ -56,11 +56,15 @@ class Command(object):
         self.parser = ArgumentParser(description=re.sub(USAGE_REGEX, r'\1', doc or self.__class__.__doc__))
         self._fill_parser()
 
-        self.args = self.parser.parse_args()
+        self.arguments, self.remaining_args = self.parser.parse_known_args()
 
         self.logger = None
 
         self._setup_logger()
+
+    @property
+    def args(self):
+        return self.arguments
 
     def _fill_parser(self):
         p = self.parser
