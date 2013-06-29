@@ -50,6 +50,9 @@ def run_command(name, command_cls, *args, **kwargs):
 
 
 class Command(object):
+    """
+    Class for easily setting up command line tools.
+    """
     CommandError = CommandError
 
     def __init__(self, doc=None):
