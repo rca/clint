@@ -56,7 +56,7 @@ class Command(object):
     CommandError = CommandError
 
     def __init__(self, doc=None):
-        self.parser = ArgumentParser(description=re.sub(USAGE_REGEX, r'\1', doc or self.__class__.__doc__))
+        self.parser = ArgumentParser(description=re.sub(USAGE_REGEX, r'\1', doc or self.__class__.__doc__ or ''))
         self._fill_parser()
 
         self.arguments, self.remaining_args = self.parser.parse_known_args()
